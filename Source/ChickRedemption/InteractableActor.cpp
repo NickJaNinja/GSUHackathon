@@ -83,10 +83,10 @@ void AInteractableActor::OnOverlapEnd(UPrimitiveComponent * OverlappedComp, AAct
 	InteractableUI->SetHiddenInGame(true);
 
 	AChickRedemptionCharacter* OverlappedChar = Cast<AChickRedemptionCharacter>(OtherActor);
-	/*if (OverlappedChar->IsValidLowLevel())
+	if (OverlappedChar->IsValidLowLevel())
 	{
-		Overlapped->OnInteract.
-	}*/
+		OverlappedChar->OnInteract.RemoveDynamic(this, &AInteractableActor::Upgrade);
+	}
 
 }
 
