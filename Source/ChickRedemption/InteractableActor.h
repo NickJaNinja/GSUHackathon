@@ -20,23 +20,28 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	bool inRange;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Pickup)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Interactable)
 		USceneComponent* Root;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Pickup)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Interactable)
 		UStaticMeshComponent* Mesh;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Pickup)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Interactable)
 		UShapeComponent* Collision;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Pickup)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Interactable)
 		AActor* SpecificActor;
 
-	AChickRedemptionCharacter* LocalRef;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Interactable)
+		class UTextRenderComponent* InteractableUI;
+
+	class AChickRedemptionCharacter* LocalRef;
 
 	//Call bakc or event
 		//When actor is spawned, (post-init), then look for the actor
@@ -56,6 +61,8 @@ public:
 			class UPrimitiveComponent* OtherComp, 
 			int32 OtherBodyIndex);
 
-
+	int32 Test;
+	FString UIText; 
+	
 
 };

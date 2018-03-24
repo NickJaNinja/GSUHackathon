@@ -4,6 +4,7 @@
 #include "Components/ShapeComponent.h"
 #include "Components/BoxComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Components/TextRenderComponent.h" //CHECK IF THIS IS RIGHT
 #include "ChickRedemptionCharacter.h"
 #include "Engine.h"
 
@@ -29,12 +30,22 @@ AInteractableActor::AInteractableActor()
 	Collision->OnComponentBeginOverlap.AddDynamic(this, &AInteractableActor::OnOverlapBegin);
 	Collision->OnComponentEndOverlap.AddDynamic(this, &AInteractableActor::OnOverlapEnd);
 	
+	InteractableUI = CreateDefaultSubobject<UTextRenderComponent>("InteractableDetails");
+	InteractableUI->SetupAttachment(Root);
+	InteractableUI->AddLocalOffset(FVector(150.0f, 10.0f, 0));
+	
+	Test = 5;
+	UIText = FString(TEXT("Press 'E' to upgrade. \n Damage Multiplier: %d"), Test);
+
+	InteractableUI->SetText(UIText);
+
 }
 
 // Called when the game starts or when spawned
 void AInteractableActor::BeginPlay()
 {
 	Super::BeginPlay();
+	InteractableUI->SetHiddenInGame(true);
 	
 }
 
@@ -43,16 +54,25 @@ void AInteractableActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (inRange == true)
+	{
+		
+	}
+
 }
 
 void AInteractableActor::OnOverlapBegin(UPrimitiveComponent * OverlappedComponent, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
 	UE_LOG(LogTemp, Warning, TEXT("BeginOverlap"));
-	
+	inRange = true;
+	InteractableUI->SetHiddenInGame(false);
+
 }
 
 void AInteractableActor::OnOverlapEnd(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
 {
 	UE_LOG(LogTemp, Warning, TEXT("EndOverlap"));
+	inRange = false;
+	InteractableUI->SetHiddenInGame(true);
 }
 
