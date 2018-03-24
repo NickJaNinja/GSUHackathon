@@ -41,6 +41,9 @@ AChickRedemptionCharacter::AChickRedemptionCharacter()
 	GetCharacterMovement()->MaxWalkSpeed = 600.f;
 	GetCharacterMovement()->MaxFlySpeed = 600.f;
 
+	
+	PrimaryActorTick.bCanEverTick = true;
+
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 }
@@ -76,25 +79,23 @@ void AChickRedemptionCharacter::TouchStopped(const ETouchIndex::Type FingerIndex
 	StopJumping();
 }
 
-void AChickRedemptionCharacter::BeginPlay()
-{
-
-}
-
 void AChickRedemptionCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	setTimeHolder(getTimeHolder() + 0.1f);
 
-	if (getTimeHolder() >= 10)
+	if (getTimeHolder() >= 1)
 	{
 		addGold(*this);
-		setTimeHolder(0.0f);
+		setTimeHolder(0.f);
+		UE_LOG(LogTemp, Warning, TEXT("Time works"));
 	}
+	
 }
 
 
 void AChickRedemptionCharacter::addGold(const AChickRedemptionCharacter & c) 
 {
 	setGold(getGold() + getIncome());
+	UE_LOG(LogTemp, Warning, TEXT("Added gold"));
 }
