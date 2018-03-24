@@ -54,9 +54,6 @@ void AInteractableActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-<<<<<<< HEAD
-
-=======
 	if (inRange == true)
 	{
 		
@@ -77,6 +74,5 @@ void AInteractableActor::OnOverlapEnd(UPrimitiveComponent * OverlappedComp, AAct
 	UE_LOG(LogTemp, Warning, TEXT("EndOverlap"));
 	inRange = false;
 	InteractableUI->SetHiddenInGame(true);
->>>>>>> InteractiveStations
 }
 
