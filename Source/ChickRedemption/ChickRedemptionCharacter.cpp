@@ -88,7 +88,6 @@ void AChickRedemptionCharacter::Tick(float DeltaTime)
 	{
 		addGold(*this);
 		setTimeHolder(0.f);
-		UE_LOG(LogTemp, Warning, TEXT("Time works"));
 	}
 	
 }
@@ -97,5 +96,4 @@ void AChickRedemptionCharacter::Tick(float DeltaTime)
 void AChickRedemptionCharacter::addGold(const AChickRedemptionCharacter & c) 
 {
 	setGold(getGold() + getIncome());
-	UE_LOG(LogTemp, Warning, TEXT("Added gold"));
 }
