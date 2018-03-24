@@ -76,3 +76,25 @@ void AChickRedemptionCharacter::TouchStopped(const ETouchIndex::Type FingerIndex
 	StopJumping();
 }
 
+void AChickRedemptionCharacter::BeginPlay()
+{
+
+}
+
+void AChickRedemptionCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	setTimeHolder(getTimeHolder() + 0.1f);
+
+	if (getTimeHolder() >= 10)
+	{
+		addGold(*this);
+		setTimeHolder(0.0f);
+	}
+}
+
+
+void AChickRedemptionCharacter::addGold(const AChickRedemptionCharacter & c) 
+{
+	setGold(getGold() + getIncome());
+}
