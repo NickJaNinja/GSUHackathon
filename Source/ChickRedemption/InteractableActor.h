@@ -61,6 +61,9 @@ public:
 			class UPrimitiveComponent* OtherComp, 
 			int32 OtherBodyIndex);
 
+	UFUNCTION()
+	void Upgrade(FVector Location);
+
 	int32 Test;
 	FString UIText; 
 	

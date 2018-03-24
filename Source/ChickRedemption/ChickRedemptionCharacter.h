@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "ChickRedemptionCharacter.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnInteract, FVector, Location);
+
 UCLASS(config=Game)
 class AChickRedemptionCharacter : public ACharacter
 {
@@ -44,6 +46,8 @@ protected:
 
 	virtual void Tick(float DeltaTime) override;
 
+	void Interact();
+
 
 public:
 	AChickRedemptionCharacter();
@@ -52,6 +56,9 @@ public:
 	FORCEINLINE class UCameraComponent* GetSideViewCameraComponent() const { return SideViewCameraComponent; }
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
+
+	UPROPERTY(VisibleAnywhere, BlueprintAssignable, Category = "Event Dispatcher")
+		FOnInteract OnInteract;
 
 	void addGold(const AChickRedemptionCharacter & c);
 

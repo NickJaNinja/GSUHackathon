@@ -7,6 +7,8 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
+
+
 AChickRedemptionCharacter::AChickRedemptionCharacter()
 {
 	// Set size for collision capsule
@@ -56,6 +58,9 @@ void AChickRedemptionCharacter::SetupPlayerInputComponent(class UInputComponent*
 	// set up gameplay key bindings
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
+
+	PlayerInputComponent->BindAction("Interact", IE_Pressed, this, &AChickRedemptionCharacter::Interact);
+
 	PlayerInputComponent->BindAxis("MoveRight", this, &AChickRedemptionCharacter::MoveRight);
 
 	PlayerInputComponent->BindTouch(IE_Pressed, this, &AChickRedemptionCharacter::TouchStarted);
@@ -90,6 +95,14 @@ void AChickRedemptionCharacter::Tick(float DeltaTime)
 		setTimeHolder(0.f);
 	}
 	
+}
+
+void AChickRedemptionCharacter::Interact()
+{
+	FVector test = { 1.0f, 2.0f, 3.0f };
+	OnInteract.Broadcast(test);
+	
+	UE_LOG(LogTemp, Warning, TEXT("CharacterInteractInput"));
 }
 
 

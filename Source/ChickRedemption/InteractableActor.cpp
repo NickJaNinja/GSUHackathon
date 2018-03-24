@@ -54,9 +54,7 @@ void AInteractableActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-<<<<<<< HEAD
 
-=======
 	if (inRange == true)
 	{
 		
@@ -70,6 +68,12 @@ void AInteractableActor::OnOverlapBegin(UPrimitiveComponent * OverlappedComponen
 	inRange = true;
 	InteractableUI->SetHiddenInGame(false);
 
+	AChickRedemptionCharacter* OverlappedChar = Cast<AChickRedemptionCharacter>(OtherActor);
+	if (OverlappedChar->IsValidLowLevel())
+	{
+		OverlappedChar->OnInteract.AddDynamic(this, &AInteractableActor::Upgrade);
+	}
+
 }
 
 void AInteractableActor::OnOverlapEnd(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
@@ -77,6 +81,16 @@ void AInteractableActor::OnOverlapEnd(UPrimitiveComponent * OverlappedComp, AAct
 	UE_LOG(LogTemp, Warning, TEXT("EndOverlap"));
 	inRange = false;
 	InteractableUI->SetHiddenInGame(true);
->>>>>>> InteractiveStations
+
+	AChickRedemptionCharacter* OverlappedChar = Cast<AChickRedemptionCharacter>(OtherActor);
+	/*if (OverlappedChar->IsValidLowLevel())
+	{
+		Overlapped->OnInteract.
+	}*/
+
 }
 
+void AInteractableActor::Upgrade(FVector Location)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Upgrade!"));
+}
