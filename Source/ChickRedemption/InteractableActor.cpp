@@ -55,11 +55,6 @@ void AInteractableActor::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 
-	if (inRange == true)
-	{
-		
-	}
-
 }
 
 void AInteractableActor::OnOverlapBegin(UPrimitiveComponent * OverlappedComponent, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
@@ -90,7 +85,25 @@ void AInteractableActor::OnOverlapEnd(UPrimitiveComponent * OverlappedComp, AAct
 
 }
 
-void AInteractableActor::Upgrade(FVector Location)
+void AInteractableActor::Upgrade(AChickRedemptionCharacter* StatsRef)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Upgrade!"));
+	if (StatsRef->getGold() >= cost)
+	{
+		int32 leftoverGold = (StatsRef->getGold() - GetCost());
+
+		StatsRef->setGold(leftoverGold);
+
+		UpdateCost();
+	}
+	else if (StatsRef->getGold() < cost)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "Insufficient Funds!");
+	}
+}
+
+
+void AInteractableActor::UpdateCost()
+{
+	cost *= 5;
 }

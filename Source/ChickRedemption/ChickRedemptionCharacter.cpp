@@ -6,7 +6,7 @@
 #include "Components/InputComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
-
+#include "Engine.h"
 
 
 AChickRedemptionCharacter::AChickRedemptionCharacter()
@@ -45,6 +45,8 @@ AChickRedemptionCharacter::AChickRedemptionCharacter()
 
 	
 	PrimaryActorTick.bCanEverTick = true;
+
+	setIncome(2);
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
@@ -91,22 +93,24 @@ void AChickRedemptionCharacter::Tick(float DeltaTime)
 
 	if (getTimeHolder() >= 1)
 	{
-		addGold(*this);
-		setTimeHolder(0.f);
+		addGold();
+		setTimeHolder(0.f);		
+		FString IntAsString = FString::FromInt(gold);
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "GOLD: " + IntAsString);
 	}
 	
 }
 
 void AChickRedemptionCharacter::Interact()
 {
-	FVector test = { 1.0f, 2.0f, 3.0f };
-	OnInteract.Broadcast(test);
+	AChickRedemptionCharacter* StatsRef = this;
+	OnInteract.Broadcast(StatsRef);
 	
 	UE_LOG(LogTemp, Warning, TEXT("CharacterInteractInput"));
 }
 
 
-void AChickRedemptionCharacter::addGold(const AChickRedemptionCharacter & c) 
+void AChickRedemptionCharacter::addGold() 
 {
 	setGold(getGold() + getIncome());
 }

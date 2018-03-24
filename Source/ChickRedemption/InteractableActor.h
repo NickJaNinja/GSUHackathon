@@ -62,10 +62,15 @@ public:
 			int32 OtherBodyIndex);
 
 	UFUNCTION()
-	void Upgrade(FVector Location);
+	void Upgrade(AChickRedemptionCharacter* StatsRef);
+
+	int32 cost = 1;
+	int32 GetCost() const { return cost; }
+	void UpdateCost();
 
 	int32 Test;
 	FString UIText; 
 	
+
 
 };

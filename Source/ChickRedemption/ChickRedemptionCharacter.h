@@ -6,7 +6,7 @@
 #include "GameFramework/Character.h"
 #include "ChickRedemptionCharacter.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnInteract, FVector, Location);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnInteract, AChickRedemptionCharacter*, Character);
 
 UCLASS(config=Game)
 class AChickRedemptionCharacter : public ACharacter
@@ -22,12 +22,12 @@ class AChickRedemptionCharacter : public ACharacter
 	class USpringArmComponent* CameraBoom;
 
 	float timeHolder = 0.f;
-	long long int income;
-	long long int gold;
-	double health;
-	int attack;
-	int defense;
-	int armor;
+	int32 income;
+	int32 gold;
+	float health;
+	int32 attack;
+	int32 defense;
+	int32 armor;
 
 protected:
 
@@ -60,21 +60,21 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintAssignable, Category = "Event Dispatcher")
 		FOnInteract OnInteract;
 
-	void addGold(const AChickRedemptionCharacter & c);
+	void addGold();
 
-	FORCEINLINE long long int getIncome() const { return income; };
+	
+
+	FORCEINLINE int32 getIncome() const { return income; };
 	FORCEINLINE float getTimeHolder() const { return timeHolder; }
-	FORCEINLINE long long int getGold() const { return gold; }
-	FORCEINLINE double getHealth() const { return health; }
-	FORCEINLINE int getAttack() const { return attack; }
-	FORCEINLINE int getDefense() const { return defense; }
-	FORCEINLINE int getArmor() const { return armor; }
+	FORCEINLINE int32 getGold() const { return gold; }
+	FORCEINLINE float getHealth() const { return health; }
+	FORCEINLINE int32 getAttack() const { return attack; }
+	FORCEINLINE int32 getArmor() const { return armor; }
 
-	FORCEINLINE void setIncome(long long int i) { income = i; }
+	FORCEINLINE void setIncome(int32 i) { income = i; }
 	FORCEINLINE void setTimeHolder(float t) { timeHolder = t; }
-	FORCEINLINE void setGold(long long int g) { gold = g; }
-	FORCEINLINE void setHealth(double h) { health = h; }
-	FORCEINLINE void setAttack(int a){ attack = a; }
-	FORCEINLINE void setDefense(int d) { defense = d; }
-	FORCEINLINE void setArmor(int a) { armor = a; }
+	FORCEINLINE void setGold(int32 g) { gold = g; }
+	FORCEINLINE void setHealth(float h) { health = h; }
+	FORCEINLINE void setAttack(int32 a){ attack = a; }
+	FORCEINLINE void setArmor(int32 a) { armor = a; }
 };
