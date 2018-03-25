@@ -30,6 +30,8 @@ class AChickRedemptionCharacter : public ACharacter
 	int32 attack;
 	int32 defense;
 	int32 armor;
+	bool isActive = false;
+
 
 protected:
 
