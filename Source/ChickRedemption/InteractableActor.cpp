@@ -4,7 +4,7 @@
 #include "Components/ShapeComponent.h"
 #include "Components/BoxComponent.h"
 #include "Components/StaticMeshComponent.h"
-#include "Components/TextRenderComponent.h" //CHECK IF THIS IS RIGHT
+#include "Components/TextRenderComponent.h" 
 #include "ChickRedemptionCharacter.h"
 #include "Engine.h"
 
