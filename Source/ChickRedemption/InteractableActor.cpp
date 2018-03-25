@@ -24,7 +24,7 @@ AInteractableActor::AInteractableActor()
 
 	Collision = CreateDefaultSubobject<UBoxComponent>("BoxCollision");
 	Collision->SetupAttachment(Root);
-	Collision->SetWorldScale3D(FVector(5.0f, 1.0f, 1.0f));
+	Collision->SetWorldScale3D(FVector(5.0f, 3.0f, 3.0f));
 	Collision->bGenerateOverlapEvents = true;
 
 	Collision->OnComponentBeginOverlap.AddDynamic(this, &AInteractableActor::OnOverlapBegin);
@@ -32,13 +32,9 @@ AInteractableActor::AInteractableActor()
 	
 	InteractableUI = CreateDefaultSubobject<UTextRenderComponent>("InteractableDetails");
 	InteractableUI->SetupAttachment(Root);
-	InteractableUI->AddLocalOffset(FVector(150.0f, 10.0f, 0));
+	InteractableUI->AddLocalOffset(FVector(150.0f, 80.0f, 10.0f));
+
 	
-	Test = 5;
-	UIText = FString(TEXT("Press 'E' to upgrade. \n Damage Multiplier: %d"), Test);
-
-	InteractableUI->SetText(UIText);
-
 }
 
 // Called when the game starts or when spawned
@@ -46,16 +42,13 @@ void AInteractableActor::BeginPlay()
 {
 	Super::BeginPlay();
 	InteractableUI->SetHiddenInGame(true);
+	UpdateText(cost);
 	
 }
 
 // Called every frame
 void AInteractableActor::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-
-}
+{ Super::Tick(DeltaTime); }
 
 void AInteractableActor::OnOverlapBegin(UPrimitiveComponent * OverlappedComponent, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
@@ -94,8 +87,13 @@ void AInteractableActor::Upgrade(AChickRedemptionCharacter* StatsRef)
 
 		StatsRef->setGold(leftoverGold);
 
+		UpdateStat(StatsRef);
+
 		UpdateCost();
+
+		UpdateText(cost);
 	}
+
 	else if (StatsRef->getGold() < cost)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "Insufficient Funds!");
@@ -106,4 +104,17 @@ void AInteractableActor::Upgrade(AChickRedemptionCharacter* StatsRef)
 void AInteractableActor::UpdateCost()
 {
 	cost *= 5;
+}
+
+void AInteractableActor::UpdateStat(AChickRedemptionCharacter* StatsRef)
+{
+	
+}
+
+void AInteractableActor::UpdateText(int32 cost)
+{
+	FString IntAsString = FString::FromInt(cost);
+	FString StationName = ("Press 'E' to upgrade. \n Cost: " + cost);
+	UIText = StationName;
+	InteractableUI->SetText(UIText);
 }
