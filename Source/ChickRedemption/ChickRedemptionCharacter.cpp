@@ -4,8 +4,11 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
+#include "Components/TextRenderComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Engine.h"
+
 
 AChickRedemptionCharacter::AChickRedemptionCharacter()
 {
@@ -41,8 +44,14 @@ AChickRedemptionCharacter::AChickRedemptionCharacter()
 	GetCharacterMovement()->MaxWalkSpeed = 600.f;
 	GetCharacterMovement()->MaxFlySpeed = 600.f;
 
-	
+	InteractableUI = CreateDefaultSubobject<UTextRenderComponent>("InteractableDetails");
+	InteractableUI->SetupAttachment(SideViewCameraComponent);
+	InteractableUI->AddLocalOffset(FVector(500.0f, -50.0f, 0.0f));
+	InteractableUI->AddLocalRotation(FRotator(0.0f, 180.0f, 0.0f));
+
 	PrimaryActorTick.bCanEverTick = true;
+
+	setIncome(2);
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
@@ -56,6 +65,9 @@ void AChickRedemptionCharacter::SetupPlayerInputComponent(class UInputComponent*
 	// set up gameplay key bindings
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
+
+	PlayerInputComponent->BindAction("Interact", IE_Pressed, this, &AChickRedemptionCharacter::Interact);
+
 	PlayerInputComponent->BindAxis("MoveRight", this, &AChickRedemptionCharacter::MoveRight);
 
 	PlayerInputComponent->BindTouch(IE_Pressed, this, &AChickRedemptionCharacter::TouchStarted);
@@ -84,16 +96,33 @@ void AChickRedemptionCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	setTimeHolder(getTimeHolder() + 0.1f);
 
-	if (getTimeHolder() >= 1)
+	if (getTimeHolder() >= 3)
 	{
-		addGold(*this);
-		setTimeHolder(0.f);
+		addGold();
+		setTimeHolder(0.f);		
+		UpdateGoldText(gold);
 	}
 	
 }
 
+void AChickRedemptionCharacter::Interact()
+{
+	AChickRedemptionCharacter* StatsRef = this;
+	OnInteract.Broadcast(StatsRef);
+	
+	UE_LOG(LogTemp, Warning, TEXT("CharacterInteractInput"));
+}
 
-void AChickRedemptionCharacter::addGold(const AChickRedemptionCharacter & c) 
+
+void AChickRedemptionCharacter::addGold() 
 {
 	setGold(getGold() + getIncome());
+}
+
+void AChickRedemptionCharacter::UpdateGoldText(int32 gold)
+{
+	FString IntAsString = FString::FromInt(gold);
+	FString StationName = ("Gold: " + IntAsString);
+	UIText = StationName;
+	InteractableUI->SetText(UIText);
 }

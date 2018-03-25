@@ -24,7 +24,7 @@ AInteractableActor::AInteractableActor()
 
 	Collision = CreateDefaultSubobject<UBoxComponent>("BoxCollision");
 	Collision->SetupAttachment(Root);
-	Collision->SetWorldScale3D(FVector(5.0f, 1.0f, 1.0f));
+	Collision->SetWorldScale3D(FVector(5.0f, 3.0f, 3.0f));
 	Collision->bGenerateOverlapEvents = true;
 
 	Collision->OnComponentBeginOverlap.AddDynamic(this, &AInteractableActor::OnOverlapBegin);
@@ -32,12 +32,9 @@ AInteractableActor::AInteractableActor()
 	
 	InteractableUI = CreateDefaultSubobject<UTextRenderComponent>("InteractableDetails");
 	InteractableUI->SetupAttachment(Root);
-	InteractableUI->AddLocalOffset(FVector(150.0f, 10.0f, 0));
-	
-	Test = 5;
-	UIText = FString(TEXT("Press 'E' to upgrade. \n Damage Multiplier: %d"), Test);
+	InteractableUI->AddLocalOffset(FVector(150.0f, 80.0f, 10.0f));
 
-	InteractableUI->SetText(UIText);
+	cost = 1;
 
 }
 
@@ -46,26 +43,25 @@ void AInteractableActor::BeginPlay()
 {
 	Super::BeginPlay();
 	InteractableUI->SetHiddenInGame(true);
+	UpdateText(cost);
 	
 }
 
 // Called every frame
 void AInteractableActor::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-	if (inRange == true)
-	{
-		
-	}
-
-}
+{ Super::Tick(DeltaTime); }
 
 void AInteractableActor::OnOverlapBegin(UPrimitiveComponent * OverlappedComponent, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
 	UE_LOG(LogTemp, Warning, TEXT("BeginOverlap"));
 	inRange = true;
 	InteractableUI->SetHiddenInGame(false);
+
+	AChickRedemptionCharacter* OverlappedChar = Cast<AChickRedemptionCharacter>(OtherActor);
+	if (OverlappedChar->IsValidLowLevel())
+	{
+		OverlappedChar->OnInteract.AddDynamic(this, &AInteractableActor::Upgrade);
+	}
 
 }
 
@@ -74,5 +70,51 @@ void AInteractableActor::OnOverlapEnd(UPrimitiveComponent * OverlappedComp, AAct
 	UE_LOG(LogTemp, Warning, TEXT("EndOverlap"));
 	inRange = false;
 	InteractableUI->SetHiddenInGame(true);
+
+	AChickRedemptionCharacter* OverlappedChar = Cast<AChickRedemptionCharacter>(OtherActor);
+	if (OverlappedChar->IsValidLowLevel())
+	{
+		OverlappedChar->OnInteract.RemoveDynamic(this, &AInteractableActor::Upgrade);
+	}
 }
 
+void AInteractableActor::Upgrade(AChickRedemptionCharacter* StatsRef)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Upgrade!"));
+	if (StatsRef->getGold() >= cost)
+	{
+		int32 leftoverGold = (StatsRef->getGold() - GetCost());
+
+		StatsRef->setGold(leftoverGold);
+
+		UpdateStat(StatsRef);
+
+		UpdateCost();
+
+		UpdateText(cost);
+	}
+
+	else if (StatsRef->getGold() < cost)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "Insufficient Funds!");
+	}
+}
+
+
+void AInteractableActor::UpdateCost()
+{
+	cost *= 5;
+}
+
+void AInteractableActor::UpdateStat(AChickRedemptionCharacter* StatsRef)
+{
+	
+}
+
+void AInteractableActor::UpdateText(int32 cost)
+{
+	FString IntAsString = FString::FromInt(cost);
+	FString StationName = ("Press 'E' to upgrade.\n Cost: " + IntAsString);
+	UIText = StationName;
+	InteractableUI->SetText(UIText);
+}
