@@ -21,6 +21,8 @@ class AChickRedemptionCharacter : public ACharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class USpringArmComponent* CameraBoom;
 
+
+
 	float timeHolder = 0.f;
 	int32 income;
 	int32 gold;
@@ -60,18 +62,22 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintAssignable, Category = "Event Dispatcher")
 		FOnInteract OnInteract;
 
-	void addGold();
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Interactable)
+		class UTextRenderComponent* InteractableUI;
 
+	FString UIText;
+	void addGold();
+	void UpdateGoldText(int32 gold);
 	
 
-	FORCEINLINE int32 getIncome() const { return income; };
+	FORCEINLINE float getIncome() const { return income; };
 	FORCEINLINE float getTimeHolder() const { return timeHolder; }
 	FORCEINLINE int32 getGold() const { return gold; }
 	FORCEINLINE float getHealth() const { return health; }
 	FORCEINLINE int32 getAttack() const { return attack; }
 	FORCEINLINE int32 getArmor() const { return armor; }
 
-	FORCEINLINE void setIncome(int32 i) { income = i; }
+	FORCEINLINE void setIncome(float i) { income = i; }
 	FORCEINLINE void setTimeHolder(float t) { timeHolder = t; }
 	FORCEINLINE void setGold(int32 g) { gold = g; }
 	FORCEINLINE void setHealth(float h) { health = h; }

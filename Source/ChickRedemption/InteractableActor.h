@@ -63,7 +63,7 @@ public:
 	UFUNCTION()
 	void Upgrade(AChickRedemptionCharacter* StatsRef);
 
-	int32 cost = 1;
+	int32 cost;
 	int32 GetCost() const { return cost; }
 	void UpdateCost();
 

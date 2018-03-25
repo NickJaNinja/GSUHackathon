@@ -4,6 +4,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
+#include "Components/TextRenderComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Engine.h"
@@ -43,7 +44,11 @@ AChickRedemptionCharacter::AChickRedemptionCharacter()
 	GetCharacterMovement()->MaxWalkSpeed = 600.f;
 	GetCharacterMovement()->MaxFlySpeed = 600.f;
 
-	
+	InteractableUI = CreateDefaultSubobject<UTextRenderComponent>("InteractableDetails");
+	InteractableUI->SetupAttachment(SideViewCameraComponent);
+	InteractableUI->AddLocalOffset(FVector(500.0f, -50.0f, 0.0f));
+	InteractableUI->AddLocalRotation(FRotator(0.0f, 180.0f, 0.0f));
+
 	PrimaryActorTick.bCanEverTick = true;
 
 	setIncome(2);
@@ -91,12 +96,11 @@ void AChickRedemptionCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	setTimeHolder(getTimeHolder() + 0.1f);
 
-	if (getTimeHolder() >= 1)
+	if (getTimeHolder() >= 3)
 	{
 		addGold();
 		setTimeHolder(0.f);		
-		FString IntAsString = FString::FromInt(gold);
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "GOLD: " + IntAsString);
+		UpdateGoldText(gold);
 	}
 	
 }
@@ -113,4 +117,12 @@ void AChickRedemptionCharacter::Interact()
 void AChickRedemptionCharacter::addGold() 
 {
 	setGold(getGold() + getIncome());
+}
+
+void AChickRedemptionCharacter::UpdateGoldText(int32 gold)
+{
+	FString IntAsString = FString::FromInt(gold);
+	FString StationName = ("Gold: " + IntAsString);
+	UIText = StationName;
+	InteractableUI->SetText(UIText);
 }

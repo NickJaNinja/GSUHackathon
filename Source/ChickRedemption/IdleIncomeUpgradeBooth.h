@@ -18,5 +18,7 @@ public:
 
 	virtual void UpdateStat(AChickRedemptionCharacter* StatsRef) override;
 	
-	
+	virtual void UpdateText(int32 cost) override;
+
+	FString UIText;
 };

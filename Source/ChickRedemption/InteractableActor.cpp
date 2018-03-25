@@ -34,7 +34,8 @@ AInteractableActor::AInteractableActor()
 	InteractableUI->SetupAttachment(Root);
 	InteractableUI->AddLocalOffset(FVector(150.0f, 80.0f, 10.0f));
 
-	
+	cost = 1;
+
 }
 
 // Called when the game starts or when spawned
@@ -114,7 +115,7 @@ void AInteractableActor::UpdateStat(AChickRedemptionCharacter* StatsRef)
 void AInteractableActor::UpdateText(int32 cost)
 {
 	FString IntAsString = FString::FromInt(cost);
-	FString StationName = ("Press 'E' to upgrade. \n Cost: " + cost);
+	FString StationName = ("Press 'E' to upgrade.\n Cost: " + IntAsString);
 	UIText = StationName;
 	InteractableUI->SetText(UIText);
 }
