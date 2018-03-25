@@ -41,7 +41,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Interactable)
 		class UTextRenderComponent* InteractableUI;
 
-	class AChickRedemptionCharacter* LocalRef;
 
 	//Call bakc or event
 		//When actor is spawned, (post-init), then look for the actor
@@ -61,8 +60,19 @@ public:
 			class UPrimitiveComponent* OtherComp, 
 			int32 OtherBodyIndex);
 
-	int32 Test;
+	UFUNCTION()
+	void Upgrade(AChickRedemptionCharacter* StatsRef);
+
+	int32 cost;
+	int32 GetCost() const { return cost; }
+	void UpdateCost();
+
+	virtual void UpdateStat(AChickRedemptionCharacter* StatsRef);
+
+	virtual void UpdateText(int32 cost);
+	
 	FString UIText; 
 	
+
 
 };

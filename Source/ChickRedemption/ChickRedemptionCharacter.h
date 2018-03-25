@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "ChickRedemptionCharacter.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnInteract, AChickRedemptionCharacter*, Character);
+
 UCLASS(config=Game)
 class AChickRedemptionCharacter : public ACharacter
 {
@@ -19,13 +21,15 @@ class AChickRedemptionCharacter : public ACharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class USpringArmComponent* CameraBoom;
 
+
+
 	float timeHolder = 0.f;
-	long long int income;
-	long long int gold;
-	double health;
-	int attack;
-	int defense;
-	int armor;
+	int32 income;
+	int32 gold;
+	float health;
+	int32 attack;
+	int32 defense;
+	int32 armor;
 
 protected:
 
@@ -44,6 +48,8 @@ protected:
 
 	virtual void Tick(float DeltaTime) override;
 
+	void Interact();
+
 
 public:
 	AChickRedemptionCharacter();
@@ -53,21 +59,28 @@ public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 
-	void addGold(const AChickRedemptionCharacter & c);
+	UPROPERTY(VisibleAnywhere, BlueprintAssignable, Category = "Event Dispatcher")
+		FOnInteract OnInteract;
 
-	FORCEINLINE long long int getIncome() const { return income; };
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Interactable)
+		class UTextRenderComponent* InteractableUI;
+
+	FString UIText;
+	void addGold();
+	void UpdateGoldText(int32 gold);
+	
+
+	FORCEINLINE float getIncome() const { return income; };
 	FORCEINLINE float getTimeHolder() const { return timeHolder; }
-	FORCEINLINE long long int getGold() const { return gold; }
-	FORCEINLINE double getHealth() const { return health; }
-	FORCEINLINE int getAttack() const { return attack; }
-	FORCEINLINE int getDefense() const { return defense; }
-	FORCEINLINE int getArmor() const { return armor; }
+	FORCEINLINE int32 getGold() const { return gold; }
+	FORCEINLINE float getHealth() const { return health; }
+	FORCEINLINE int32 getAttack() const { return attack; }
+	FORCEINLINE int32 getArmor() const { return armor; }
 
-	FORCEINLINE void setIncome(long long int i) { income = i; }
+	FORCEINLINE void setIncome(float i) { income = i; }
 	FORCEINLINE void setTimeHolder(float t) { timeHolder = t; }
-	FORCEINLINE void setGold(long long int g) { gold = g; }
-	FORCEINLINE void setHealth(double h) { health = h; }
-	FORCEINLINE void setAttack(int a){ attack = a; }
-	FORCEINLINE void setDefense(int d) { defense = d; }
-	FORCEINLINE void setArmor(int a) { armor = a; }
+	FORCEINLINE void setGold(int32 g) { gold = g; }
+	FORCEINLINE void setHealth(float h) { health = h; }
+	FORCEINLINE void setAttack(int32 a){ attack = a; }
+	FORCEINLINE void setArmor(int32 a) { armor = a; }
 };
