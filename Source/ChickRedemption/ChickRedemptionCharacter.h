@@ -24,8 +24,8 @@ class AChickRedemptionCharacter : public ACharacter
 
 
 	float timeHolder = 0.f;
-	int32 income;
-	int32 gold;
+	float income = 1.3;
+	float gold;
 	float health;
 	int32 attack;
 	int32 defense;
@@ -69,19 +69,19 @@ public:
 
 	FString UIText;
 	void addGold();
-	void UpdateGoldText(int32 gold);
+	void UpdateGoldText(float gold);
 	
 
 	FORCEINLINE float getIncome() const { return income; };
 	FORCEINLINE float getTimeHolder() const { return timeHolder; }
-	FORCEINLINE int32 getGold() const { return gold; }
+	FORCEINLINE float getGold() const { return gold; }
 	FORCEINLINE float getHealth() const { return health; }
 	FORCEINLINE int32 getAttack() const { return attack; }
 	FORCEINLINE int32 getArmor() const { return armor; }
 
 	FORCEINLINE void setIncome(float i) { income = i; }
 	FORCEINLINE void setTimeHolder(float t) { timeHolder = t; }
-	FORCEINLINE void setGold(int32 g) { gold = g; }
+	FORCEINLINE void setGold(float g) { gold = g; }
 	FORCEINLINE void setHealth(float h) { health = h; }
 	FORCEINLINE void setAttack(int32 a){ attack = a; }
 	FORCEINLINE void setArmor(int32 a) { armor = a; }

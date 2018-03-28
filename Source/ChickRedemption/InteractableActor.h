@@ -63,13 +63,19 @@ public:
 	UFUNCTION()
 	void Upgrade(AChickRedemptionCharacter* StatsRef);
 
-	int32 cost;
-	int32 GetCost() const { return cost; }
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Interactable")
+		float initialCost;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Interactable")
+		float costMultiplier;
+	
+
+	float GetCost() const { return initialCost; }
 	void UpdateCost();
 
 	virtual void UpdateStat(AChickRedemptionCharacter* StatsRef);
 
-	virtual void UpdateText(int32 cost);
+	virtual void UpdateText(float cost);
 	
 	FString UIText; 
 	

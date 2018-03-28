@@ -11,18 +11,19 @@ void AIdleIncomeUpgradeBooth::UpdateStat(AChickRedemptionCharacter* StatsRef)
 {
 	Super::UpdateStat(StatsRef);
 
-	int32 CurrentIncome = StatsRef->getIncome();
-	int32 NewIncome = CurrentIncome * 2;
+	float CurrentIncome = StatsRef->getIncome();
+	float NewIncome = CurrentIncome * incomeMultiplier;
 
 	StatsRef->setIncome(NewIncome);
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, "Income Increased by 1.3x!");
+	FString IncomeMultiplierText = FString::SanitizeFloat(incomeMultiplier);
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, "Income increased by " + IncomeMultiplierText +"!");
 }
 
-void AIdleIncomeUpgradeBooth::UpdateText(int32 cost)
+void AIdleIncomeUpgradeBooth::UpdateText(float cost)
 {
-	//Super::UpdateText(cost);
-	FString IntAsString = FString::FromInt(cost);
-	FString StationName = ("Press 'E' to upgrade.\nIncome Booster\n Cost: " + IntAsString);
+	float RoundedCost = FMath::RoundHalfToZero(cost);
+	FString FloatAsString = FString::SanitizeFloat(cost);
+	FString StationName = ("Press 'E' to upgrade.\nIncome Booster\n Cost: " + FloatAsString);
 	UIText = StationName;
 	InteractableUI->SetText(UIText);
 

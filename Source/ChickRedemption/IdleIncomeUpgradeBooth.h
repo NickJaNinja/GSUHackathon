@@ -16,9 +16,12 @@ class CHICKREDEMPTION_API AIdleIncomeUpgradeBooth : public AInteractableActor
 
 public:
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Income Generator")
+		float incomeMultiplier = 1.3;
+
 	virtual void UpdateStat(AChickRedemptionCharacter* StatsRef) override;
 	
-	virtual void UpdateText(int32 cost) override;
+	virtual void UpdateText(float cost) override;
 
 	FString UIText;
 };

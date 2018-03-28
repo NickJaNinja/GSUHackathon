@@ -46,12 +46,12 @@ AChickRedemptionCharacter::AChickRedemptionCharacter()
 
 	InteractableUI = CreateDefaultSubobject<UTextRenderComponent>("InteractableDetails");
 	InteractableUI->SetupAttachment(SideViewCameraComponent);
-	InteractableUI->AddLocalOffset(FVector(500.0f, -50.0f, 0.0f));
+	InteractableUI->AddLocalOffset(FVector(400.0f, -40.0f, 0.0f));
 	InteractableUI->AddLocalRotation(FRotator(0.0f, 180.0f, 0.0f));
 
 	PrimaryActorTick.bCanEverTick = true;
 
-	setIncome(2);
+	
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
@@ -119,10 +119,11 @@ void AChickRedemptionCharacter::addGold()
 	setGold(getGold() + getIncome());
 }
 
-void AChickRedemptionCharacter::UpdateGoldText(int32 gold)
+void AChickRedemptionCharacter::UpdateGoldText(float gold)
 {
-	FString IntAsString = FString::FromInt(gold);
-	FString StationName = ("Gold: " + IntAsString);
+	float RoundedGold = FMath::RoundHalfToZero(gold);
+	FString FloatAsString = FString::SanitizeFloat(RoundedGold);
+	FString StationName = ("Gold: " + FloatAsString);
 	UIText = StationName;
 	InteractableUI->SetText(UIText);
 }

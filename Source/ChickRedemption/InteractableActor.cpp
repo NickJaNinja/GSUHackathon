@@ -34,7 +34,7 @@ AInteractableActor::AInteractableActor()
 	InteractableUI->SetupAttachment(Root);
 	InteractableUI->AddLocalOffset(FVector(150.0f, 80.0f, 10.0f));
 
-	cost = 1;
+	initialCost = 1;
 
 }
 
@@ -43,7 +43,7 @@ void AInteractableActor::BeginPlay()
 {
 	Super::BeginPlay();
 	InteractableUI->SetHiddenInGame(true);
-	UpdateText(cost);
+	UpdateText(initialCost);
 	
 }
 
@@ -81,9 +81,9 @@ void AInteractableActor::OnOverlapEnd(UPrimitiveComponent * OverlappedComp, AAct
 void AInteractableActor::Upgrade(AChickRedemptionCharacter* StatsRef)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Upgrade!"));
-	if (StatsRef->getGold() >= cost)
+	if (StatsRef->getGold() >= initialCost)
 	{
-		int32 leftoverGold = (StatsRef->getGold() - GetCost());
+		float leftoverGold = (StatsRef->getGold() - GetCost());
 
 		StatsRef->setGold(leftoverGold);
 
@@ -91,10 +91,10 @@ void AInteractableActor::Upgrade(AChickRedemptionCharacter* StatsRef)
 
 		UpdateCost();
 
-		UpdateText(cost);
+		UpdateText(initialCost);
 	}
 
-	else if (StatsRef->getGold() < cost)
+	else if (StatsRef->getGold() < initialCost)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "Insufficient Funds!");
 	}
@@ -103,7 +103,7 @@ void AInteractableActor::Upgrade(AChickRedemptionCharacter* StatsRef)
 
 void AInteractableActor::UpdateCost()
 {
-	cost *= 5;
+	initialCost *= costMultiplier;
 }
 
 void AInteractableActor::UpdateStat(AChickRedemptionCharacter* StatsRef)
@@ -111,10 +111,11 @@ void AInteractableActor::UpdateStat(AChickRedemptionCharacter* StatsRef)
 	
 }
 
-void AInteractableActor::UpdateText(int32 cost)
+void AInteractableActor::UpdateText(float cost)
 {
-	FString IntAsString = FString::FromInt(cost);
-	FString StationName = ("Press 'E' to upgrade.\n Cost: " + IntAsString);
+	float RoundedCost = FMath::RoundHalfToZero(cost);
+	FString FloatAsString = FString::SanitizeFloat(cost);
+	FString StationName = ("Press 'E' to upgrade.\n Cost: " + FloatAsString);
 	UIText = StationName;
 	InteractableUI->SetText(UIText);
 }
