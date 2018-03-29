@@ -7,6 +7,7 @@
 #include "Components/TextRenderComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+
 #include "Engine.h"
 
 
@@ -65,7 +66,7 @@ void AChickRedemptionCharacter::SetupPlayerInputComponent(class UInputComponent*
 	// set up gameplay key bindings
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
-
+	
 	PlayerInputComponent->BindAction("Interact", IE_Pressed, this, &AChickRedemptionCharacter::Interact);
 
 	PlayerInputComponent->BindAxis("MoveRight", this, &AChickRedemptionCharacter::MoveRight);
@@ -77,7 +78,10 @@ void AChickRedemptionCharacter::SetupPlayerInputComponent(class UInputComponent*
 void AChickRedemptionCharacter::MoveRight(float Value)
 {
 	// add movement in that direction
-	AddMovementInput(FVector(0.f,-1.f,0.f), Value);
+	if (isPlaying == false)
+	{
+		AddMovementInput(FVector(0.f, -1.f, 0.f), Value);
+	}
 }
 
 void AChickRedemptionCharacter::TouchStarted(const ETouchIndex::Type FingerIndex, const FVector Location)
@@ -116,7 +120,13 @@ void AChickRedemptionCharacter::Interact()
 
 void AChickRedemptionCharacter::addGold() 
 {
-	setGold(getGold() + getIncome());
+	if (isPlaying){
+		setGold(getGold() + getIncome() + getWaveIncomeBonus());
+	}
+	else {
+		setGold(getGold() + getIncome());
+	}
+	
 }
 
 void AChickRedemptionCharacter::UpdateGoldText(float gold)
@@ -124,6 +134,18 @@ void AChickRedemptionCharacter::UpdateGoldText(float gold)
 	float RoundedGold = FMath::RoundHalfToZero(gold);
 	FString FloatAsString = FString::SanitizeFloat(RoundedGold);
 	FString StationName = ("Gold: " + FloatAsString);
-	UIText = StationName;
-	InteractableUI->SetText(UIText);
+	UICurrencyText = StationName;
+	InteractableUI->SetText(UICurrencyText);
+}
+
+void AChickRedemptionCharacter::EnterPlay()
+{
+	isPlaying = true;
+	//Start player animation
+	
+}
+
+void AChickRedemptionCharacter::ExitPlay()
+{
+	isPlaying = false;
 }

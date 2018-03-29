@@ -26,11 +26,12 @@ class AChickRedemptionCharacter : public ACharacter
 	float timeHolder = 0.f;
 	float income = 1.3;
 	float gold;
-	float health;
+	float health = 30.0f;
 	int32 attack;
 	int32 defense;
 	int32 armor;
-	bool isActive = false;
+	int32 waveIncomeBonus;
+	bool isPlaying = false;
 
 
 protected:
@@ -50,6 +51,7 @@ protected:
 
 	virtual void Tick(float DeltaTime) override;
 
+	//Player Events
 	void Interact();
 
 
@@ -64,13 +66,15 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintAssignable, Category = "Event Dispatcher")
 		FOnInteract OnInteract;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Interactable)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI")
 		class UTextRenderComponent* InteractableUI;
 
-	FString UIText;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Animation")
+		class UBlendSpace1D* BlendSpace;
+
+	FString UICurrencyText;
 	void addGold();
 	void UpdateGoldText(float gold);
-	
 
 	FORCEINLINE float getIncome() const { return income; };
 	FORCEINLINE float getTimeHolder() const { return timeHolder; }
@@ -85,4 +89,10 @@ public:
 	FORCEINLINE void setHealth(float h) { health = h; }
 	FORCEINLINE void setAttack(int32 a){ attack = a; }
 	FORCEINLINE void setArmor(int32 a) { armor = a; }
+
+	FORCEINLINE int32 getWaveIncomeBonus() const {return waveIncomeBonus;}
+	FORCEINLINE void setWaveIncomeBonus(int32 w) { waveIncomeBonus = w; }
+	//Gameplay Events
+	void EnterPlay();
+	void ExitPlay();
 };
