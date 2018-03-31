@@ -21,18 +21,16 @@ class AChickRedemptionCharacter : public ACharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class USpringArmComponent* CameraBoom;
 
-
-
 	float timeHolder = 0.f;
 	float income = 1.3;
 	float gold;
-	float health = 30.0f;
+	float health;
+	float maxHealth = 30.0f;
 	int32 attack;
 	int32 defense;
 	int32 armor;
 	int32 waveIncomeBonus;
 	bool isPlaying = false;
-
 
 protected:
 
@@ -72,26 +70,37 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Animation")
 		class UBlendSpace1D* BlendSpace;
 
+	FORCEINLINE float getGold() const { return gold; }
+	FORCEINLINE void setGold(float g) { gold = g; }
+	FORCEINLINE float getIncome() const { return income; }
+	FORCEINLINE void setIncome(float i) { income = i; }
+	FORCEINLINE int32 getWaveIncomeBonus() const { return waveIncomeBonus; }
+	FORCEINLINE void setWaveIncomeBonus(int32 w) { waveIncomeBonus = w; }
+
+	FORCEINLINE float getTimeHolder() const { return timeHolder; }
+	FORCEINLINE void setTimeHolder(float t) { timeHolder = t; }
+
+	FORCEINLINE float getHealth() const { return health; }
+	FORCEINLINE void setHealth(float h) { health = h; }
+	FORCEINLINE float getMaxHealth() const { return maxHealth; }
+	FORCEINLINE void setMaxHealth(float mh) { maxHealth = mh; }
+
+	FORCEINLINE int32 getAttack() const { return attack; }
+	FORCEINLINE void setAttack(int32 a) { attack = a; }
+
+	FORCEINLINE int32 getArmor() const { return armor; }
+	FORCEINLINE void setArmor(int32 a) { armor = a; }
+
+
+
+	//Income Functions
 	FString UICurrencyText;
 	void addGold();
 	void UpdateGoldText(float gold);
 
-	FORCEINLINE float getIncome() const { return income; };
-	FORCEINLINE float getTimeHolder() const { return timeHolder; }
-	FORCEINLINE float getGold() const { return gold; }
-	FORCEINLINE float getHealth() const { return health; }
-	FORCEINLINE int32 getAttack() const { return attack; }
-	FORCEINLINE int32 getArmor() const { return armor; }
+	//Health Functions
+	void UpdateHealth(float inputHealth);
 
-	FORCEINLINE void setIncome(float i) { income = i; }
-	FORCEINLINE void setTimeHolder(float t) { timeHolder = t; }
-	FORCEINLINE void setGold(float g) { gold = g; }
-	FORCEINLINE void setHealth(float h) { health = h; }
-	FORCEINLINE void setAttack(int32 a){ attack = a; }
-	FORCEINLINE void setArmor(int32 a) { armor = a; }
-
-	FORCEINLINE int32 getWaveIncomeBonus() const {return waveIncomeBonus;}
-	FORCEINLINE void setWaveIncomeBonus(int32 w) { waveIncomeBonus = w; }
 	//Gameplay Events
 	void EnterPlay();
 	void ExitPlay();

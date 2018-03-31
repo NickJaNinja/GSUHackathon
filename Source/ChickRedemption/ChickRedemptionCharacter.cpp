@@ -52,7 +52,8 @@ AChickRedemptionCharacter::AChickRedemptionCharacter()
 
 	PrimaryActorTick.bCanEverTick = true;
 
-	
+	//Sets current health to max
+	setHealth(getMaxHealth());
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
@@ -138,9 +139,30 @@ void AChickRedemptionCharacter::UpdateGoldText(float gold)
 	InteractableUI->SetText(UICurrencyText);
 }
 
+void AChickRedemptionCharacter::UpdateHealth(float inputHealth)
+{
+
+	//TODO set up a max health that prevents health from exceeding your max
+	setHealth(getHealth() + inputHealth);
+
+	if (getHealth() <= 0)
+	{
+		ExitPlay();
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, "You are ded");
+	}
+	if (inputHealth < 0)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, "Took Damage");
+	}
+	
+}
+
+
+
 void AChickRedemptionCharacter::EnterPlay()
 {
 	isPlaying = true;
+	setHealth(getMaxHealth());
 	//Start player animation
 	
 }
@@ -148,4 +170,5 @@ void AChickRedemptionCharacter::EnterPlay()
 void AChickRedemptionCharacter::ExitPlay()
 {
 	isPlaying = false;
+	setHealth(getMaxHealth());
 }

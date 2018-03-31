@@ -9,7 +9,7 @@ void AHealthUpgradeBooth::UpdateStat(AChickRedemptionCharacter* StatsRef)
 {
 	Super::UpdateStat(StatsRef);
 
-	float CurrentHealth = StatsRef->getHealth();
+	float CurrentHealth = StatsRef->getMaxHealth();
 	float NewHealth = CurrentHealth * healthMultiplier;
 
 	StatsRef->setHealth(NewHealth);
