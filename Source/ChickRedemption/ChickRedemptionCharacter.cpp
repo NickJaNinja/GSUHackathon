@@ -7,7 +7,7 @@
 #include "Components/TextRenderComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
-
+#include "Animation/BlendSpace1D.h"
 #include "Engine.h"
 
 
