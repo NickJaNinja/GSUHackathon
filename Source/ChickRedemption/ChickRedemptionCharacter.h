@@ -8,6 +8,8 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnInteract, AChickRedemptionCharacter*, Character);
 
+
+
 UCLASS(config=Game)
 class AChickRedemptionCharacter : public ACharacter
 {
@@ -69,6 +71,12 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Animation")
 		class UBlendSpace1D* BlendSpace;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "EnemyManager")
+		class AEnemyManager* EnemyManager;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spawn")
+		AActor* Spawn;
 
 	FORCEINLINE float getGold() const { return gold; }
 	FORCEINLINE void setGold(float g) { gold = g; }

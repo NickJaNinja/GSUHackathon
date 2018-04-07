@@ -58,6 +58,11 @@ public:
 	UFUNCTION()
 		int32 getRandomSpeed();
 
+	UFUNCTION()
+		void Expire();
+
+	FTimerHandle timerHandle;
+
 	float GetDamage(float waveMultiplier);
 
 };

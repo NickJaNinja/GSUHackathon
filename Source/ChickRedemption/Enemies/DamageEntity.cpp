@@ -35,6 +35,7 @@ void ADamageEntity::BeginPlay()
 {
 	Super::BeginPlay();
 	speed = getRandomSpeed();
+	GetWorld()->GetTimerManager().SetTimer(timerHandle, this, &ADamageEntity::Expire, 5.0f, false);
 }
 
 // Called every frame
@@ -53,6 +54,7 @@ void ADamageEntity::OnOverlapBegin(UPrimitiveComponent * OverlappedComponent, AA
 	{
 		OverlappedChar->UpdateHealth(GetDamage(waveLevel));
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, "Dmg Overlap");
+		Destroy();
 	}
 	
 }
@@ -64,7 +66,7 @@ void ADamageEntity::OnOverlapEnd(UPrimitiveComponent * OverlappedComp, AActor * 
 void ADamageEntity::addDisplacement(int32 speed)
 {
 	FVector ref = GetActorLocation();
-	ref.Y += speed;
+	ref.Z -= speed;
 	SetActorLocation(ref);
 }
 
@@ -79,3 +81,7 @@ float ADamageEntity::GetDamage(float waveMultiplier)
 	return waveMultiplier * -10;
 }
 
+void ADamageEntity::Expire()
+{
+	Destroy();
+}

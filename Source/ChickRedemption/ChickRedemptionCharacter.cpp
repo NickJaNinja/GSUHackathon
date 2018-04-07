@@ -9,6 +9,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Animation/BlendSpace1D.h"
 #include "Engine.h"
+#include "Enemies/EnemyManager.h"
 
 
 AChickRedemptionCharacter::AChickRedemptionCharacter()
@@ -79,10 +80,9 @@ void AChickRedemptionCharacter::SetupPlayerInputComponent(class UInputComponent*
 void AChickRedemptionCharacter::MoveRight(float Value)
 {
 	// add movement in that direction
-	if (isPlaying == false)
-	{
-		AddMovementInput(FVector(0.f, -1.f, 0.f), Value);
-	}
+	
+	AddMovementInput(FVector(0.f, -1.f, 0.f), Value);
+	
 }
 
 void AChickRedemptionCharacter::TouchStarted(const ETouchIndex::Type FingerIndex, const FVector Location)
@@ -158,12 +158,17 @@ void AChickRedemptionCharacter::UpdateHealth(float inputHealth)
 }
 
 
-
 void AChickRedemptionCharacter::EnterPlay()
 {
 	isPlaying = true;
 	setHealth(getMaxHealth());
-	//Start player animation
+	if (EnemyManager != NULL)
+	{
+		EnemyManager->TrueSpawn();
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, "Manager Found");
+	}
+	
+	//Cast to the enemy manager to tell it to play
 	
 }
 
@@ -171,4 +176,11 @@ void AChickRedemptionCharacter::ExitPlay()
 {
 	isPlaying = false;
 	setHealth(getMaxHealth());
+	if (EnemyManager != NULL)
+	{
+		EnemyManager->NotInPlay();
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, "not playing");
+	}
+	SetActorLocation(Spawn->GetActorLocation());
+	//TODO Move the char to idle area
 }
