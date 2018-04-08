@@ -53,7 +53,7 @@ void ADamageEntity::OnOverlapBegin(UPrimitiveComponent * OverlappedComponent, AA
 	if (OverlappedChar->IsValidLowLevel())
 	{
 		OverlappedChar->UpdateHealth(GetDamage(waveLevel));
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, "Dmg Overlap");
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, "Dmg Overlap");
 		Destroy();
 	}
 	
@@ -72,7 +72,7 @@ void ADamageEntity::addDisplacement(int32 speed)
 
 int32 ADamageEntity::getRandomSpeed()
 {
-	int32 random = FMath::RandRange(12, 25);
+	int32 random = FMath::RandRange(8, 20);
 	return random;
 }
 

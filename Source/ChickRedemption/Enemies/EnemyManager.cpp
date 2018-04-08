@@ -41,7 +41,7 @@ void AEnemyManager::Tick(float DeltaTime)
 
 void AEnemyManager::SpawnEnemies()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, "spawned enemy");
+	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, "spawned enemy");
 
 	FVector ActorLoc = RandomLocation();
 	FRotator ActorRot = RandomRotation();
@@ -73,7 +73,7 @@ FRotator AEnemyManager::RandomRotation()
 void AEnemyManager::ManageSpawn()
 {
 	canSpawn = false;
-	GetWorld()->GetTimerManager().SetTimer(_loopTimerHandle, this, &AEnemyManager::SpawnEnemies, 1.0f, false);
+	GetWorld()->GetTimerManager().SetTimer(_loopTimerHandle, this, &AEnemyManager::SpawnEnemies, .4f, false);
 }
 
 int32 AEnemyManager::WaveUpdate()

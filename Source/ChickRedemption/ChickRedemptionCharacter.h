@@ -27,7 +27,7 @@ class AChickRedemptionCharacter : public ACharacter
 	float income = 1.3;
 	float gold;
 	float health;
-	float maxHealth;
+	float maxHealth = 30;
 	int32 attack;
 	int32 defense;
 	int32 armor;

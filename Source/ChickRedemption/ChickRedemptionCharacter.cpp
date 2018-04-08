@@ -54,7 +54,7 @@ AChickRedemptionCharacter::AChickRedemptionCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 
 	//Sets current health to max
-	maxHealth = 30.0f;
+
 	setHealth(getMaxHealth());
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
@@ -142,20 +142,24 @@ void AChickRedemptionCharacter::UpdateGoldText(float gold)
 
 void AChickRedemptionCharacter::UpdateHealth(float inputHealth)
 {
-
 	//TODO set up a max health that prevents health from exceeding your max
 	setHealth(getHealth() + inputHealth);
+
+	float RoundedHealth = FMath::RoundHalfToZero(getHealth());
+	FString FloatAsString = FString::SanitizeFloat(RoundedHealth);
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "Health: " + FloatAsString);
 
 	if (getHealth() <= 0)
 	{
 		ExitPlay();
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, "You are ded");
 	}
+
 	if (inputHealth < 0)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, "Took Damage");
 	}
-	
+
 }
 
 
@@ -167,10 +171,7 @@ void AChickRedemptionCharacter::EnterPlay()
 	if (EnemyManager != NULL)
 	{
 		EnemyManager->TrueSpawn();
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, "Manager Found");
 	}
-	
-	//Cast to the enemy manager to tell it to play
 	
 }
 
@@ -181,8 +182,7 @@ void AChickRedemptionCharacter::ExitPlay()
 	if (EnemyManager != NULL)
 	{
 		EnemyManager->NotInPlay();
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, "not playing");
 	}
 	SetActorLocation(Spawn->GetActorLocation());
-	//TODO Move the char to idle area
+
 }

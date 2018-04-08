@@ -12,7 +12,7 @@ void AHealthUpgradeBooth::UpdateStat(AChickRedemptionCharacter* StatsRef)
 	float CurrentHealth = StatsRef->getMaxHealth();
 	float NewHealth = CurrentHealth * healthMultiplier;
 
-	StatsRef->setHealth(NewHealth);
+	StatsRef->setMaxHealth(NewHealth);
 	float RoundedHealth = FMath::RoundHalfToZero(NewHealth);
 	FString HealthMultiplierText = FString::SanitizeFloat(RoundedHealth);
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, "New Health: " + HealthMultiplierText + "!");
