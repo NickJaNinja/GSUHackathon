@@ -21,7 +21,7 @@ void AHealthUpgradeBooth::UpdateStat(AChickRedemptionCharacter* StatsRef)
 void AHealthUpgradeBooth::UpdateText(float cost)
 {
 	float RoundedCost = FMath::RoundHalfToZero(cost);
-	FString FloatAsString = FString::SanitizeFloat(cost);
+	FString FloatAsString = FString::SanitizeFloat(RoundedCost);
 	FString StationName = ("Press 'E' to upgrade.\nHealth Booster\n Cost: " + FloatAsString);
 	UIText = StationName;
 	InteractableUI->SetText(UIText);
