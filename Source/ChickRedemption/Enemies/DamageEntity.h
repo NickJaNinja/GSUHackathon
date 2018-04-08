@@ -61,6 +61,9 @@ public:
 	UFUNCTION()
 		void Expire();
 
+	UFUNCTION()
+		void SetWave(int32 wave);
+
 	FTimerHandle timerHandle;
 
 	float GetDamage(float waveMultiplier);

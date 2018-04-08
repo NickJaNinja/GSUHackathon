@@ -72,13 +72,18 @@ void ADamageEntity::addDisplacement(int32 speed)
 
 int32 ADamageEntity::getRandomSpeed()
 {
-	int32 random = FMath::RandRange(25, 50);
+	int32 random = FMath::RandRange(12, 25);
 	return random;
 }
 
 float ADamageEntity::GetDamage(float waveMultiplier)
 {
 	return waveMultiplier * -10;
+}
+
+void ADamageEntity::SetWave(int32 wave)
+{
+	waveLevel = wave;
 }
 
 void ADamageEntity::Expire()

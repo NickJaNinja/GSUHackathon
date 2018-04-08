@@ -27,7 +27,7 @@ AChickRedemptionCharacter::AChickRedemptionCharacter()
 	CameraBoom->SetupAttachment(RootComponent);
 	CameraBoom->bAbsoluteRotation = true; // Rotation of the character should not affect rotation of boom
 	CameraBoom->bDoCollisionTest = false;
-	CameraBoom->TargetArmLength = 500.f;
+	CameraBoom->TargetArmLength = 900.f;
 	CameraBoom->SocketOffset = FVector(0.f,0.f,75.f);
 	CameraBoom->RelativeRotation = FRotator(0.f,180.f,0.f);
 
@@ -54,6 +54,7 @@ AChickRedemptionCharacter::AChickRedemptionCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 
 	//Sets current health to max
+	maxHealth = 30.0f;
 	setHealth(getMaxHealth());
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
@@ -162,6 +163,7 @@ void AChickRedemptionCharacter::EnterPlay()
 {
 	isPlaying = true;
 	setHealth(getMaxHealth());
+	setWaveIncomeBonus(waveIncomeBonus + 2);
 	if (EnemyManager != NULL)
 	{
 		EnemyManager->TrueSpawn();

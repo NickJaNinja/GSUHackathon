@@ -27,7 +27,7 @@ class AChickRedemptionCharacter : public ACharacter
 	float income = 1.3;
 	float gold;
 	float health;
-	float maxHealth = 30.0f;
+	float maxHealth;
 	int32 attack;
 	int32 defense;
 	int32 armor;
@@ -77,6 +77,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spawn")
 		AActor* Spawn;
+
+	
 
 	FORCEINLINE float getGold() const { return gold; }
 	FORCEINLINE void setGold(float g) { gold = g; }

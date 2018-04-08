@@ -17,6 +17,7 @@ AEnemyManager::AEnemyManager()
 	Icon = CreateDefaultSubobject<UBillboardComponent>("Icon");
 	Icon->SetupAttachment(Root);
 	
+	wave = 1;
 }
 
 // Called when the game starts or when spawned
@@ -45,15 +46,19 @@ void AEnemyManager::SpawnEnemies()
 	FVector ActorLoc = RandomLocation();
 	FRotator ActorRot = RandomRotation();
 	FActorSpawnParameters SpawnParam;
+	
+	if (EnemyInstance != NULL)
+	{
+		GetWorld()->SpawnActor<ADamageEntity>(EnemyInstance, ActorLoc, ActorRot, SpawnParam);
+	}
 
-	GetWorld()->SpawnActor<ADamageEntity>(ActorLoc, ActorRot, SpawnParam);
 	canSpawn = true;
 }
 
 FVector AEnemyManager::RandomLocation()
 {
 	FVector Location = GetActorLocation();
-	Location.X = GetActorLocation().X + FMath::RandRange(MinSpawnLoc, MaxLoc);
+	Location.Y = GetActorLocation().Y + FMath::RandRange(MinSpawnLoc, MaxLoc);
 	return Location;
 }
 
@@ -69,6 +74,12 @@ void AEnemyManager::ManageSpawn()
 {
 	canSpawn = false;
 	GetWorld()->GetTimerManager().SetTimer(_loopTimerHandle, this, &AEnemyManager::SpawnEnemies, 1.0f, false);
+}
+
+int32 AEnemyManager::WaveUpdate()
+{
+	wave += 2;
+	return wave;
 }
 
 bool AEnemyManager::TrueSpawn()

@@ -35,6 +35,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spawn Location")
 		int32 MaxLoc;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "EnemyBP")
+		TSubclassOf<class ADamageEntity> EnemyInstance;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spawn Location")
+		int32 wave;
+	
 	bool inPlay;
 	bool canSpawn;
 
@@ -52,8 +58,13 @@ public:
 	UFUNCTION()
 		void ManageSpawn();
 
+	UFUNCTION()
+		int32 WaveUpdate();
+
 	bool TrueSpawn();
 	bool NotInPlay();
+
+	
 	//UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Player Reference")
 	//	AChickRedemptionCharacter* CharRef;
 	
