@@ -73,7 +73,7 @@ FRotator AEnemyManager::RandomRotation()
 void AEnemyManager::ManageSpawn()
 {
 	canSpawn = false;
-	GetWorld()->GetTimerManager().SetTimer(_loopTimerHandle, this, &AEnemyManager::SpawnEnemies, .4f, false);
+	GetWorld()->GetTimerManager().SetTimer(_loopTimerHandle, this, &AEnemyManager::SpawnEnemies, .6f, false);
 }
 
 int32 AEnemyManager::WaveUpdate()

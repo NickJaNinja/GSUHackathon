@@ -19,9 +19,15 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Play Mode")
 		AActor* PlayLocation;
 
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Health Booster")
+		float costIncrease = 150;
+
 	virtual void UpdateStat(AChickRedemptionCharacter* StatsRef) override;
 
 	virtual void UpdateText(float cost) override;
+
+	virtual void UpdateCost() override;
 
 	FString UIText;
 	

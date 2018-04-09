@@ -71,7 +71,7 @@ public:
 	
 
 	float GetCost() const { return initialCost; }
-	void UpdateCost();
+	virtual void UpdateCost();
 
 	virtual void UpdateStat(AChickRedemptionCharacter* StatsRef);
 

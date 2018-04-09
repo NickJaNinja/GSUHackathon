@@ -10,7 +10,7 @@ void AHealthUpgradeBooth::UpdateStat(AChickRedemptionCharacter* StatsRef)
 	Super::UpdateStat(StatsRef);
 
 	float CurrentHealth = StatsRef->getMaxHealth();
-	float NewHealth = CurrentHealth * healthMultiplier;
+	float NewHealth = CurrentHealth + healthIncrease;
 
 	StatsRef->setMaxHealth(NewHealth);
 	float RoundedHealth = FMath::RoundHalfToZero(NewHealth);

@@ -9,8 +9,10 @@ void AMovementSpeedBooth::UpdateStat(AChickRedemptionCharacter* StatsRef)
 {
 	Super::UpdateStat(StatsRef);
 
-	float NewSpeed = (StatsRef->GetCharacterMovement()->MaxWalkSpeed + movementMultiplier);
+	float NewSpeed = (StatsRef->GetCharacterMovement()->MaxWalkSpeed + movementIncrease);
 	StatsRef->GetCharacterMovement()->MaxWalkSpeed = NewSpeed;
+	float NewFriction = (StatsRef->GetCharacterMovement()->GroundFriction + frictionIncrease);
+	StatsRef->GetCharacterMovement()->GroundFriction = NewFriction;
 
 	float RoundedSpeed = FMath::RoundHalfToZero(NewSpeed);
 	FString MoveSpeedText = FString::SanitizeFloat(RoundedSpeed);

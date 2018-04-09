@@ -167,7 +167,7 @@ void AChickRedemptionCharacter::EnterPlay()
 {
 	isPlaying = true;
 	setHealth(getMaxHealth());
-	setWaveIncomeBonus(waveIncomeBonus + 2);
+	setWaveIncomeBonus(waveIncomeBonus + 4);
 	if (EnemyManager != NULL)
 	{
 		EnemyManager->TrueSpawn();

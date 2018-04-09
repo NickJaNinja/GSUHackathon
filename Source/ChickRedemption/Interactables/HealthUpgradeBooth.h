@@ -17,7 +17,7 @@ class CHICKREDEMPTION_API AHealthUpgradeBooth : public AInteractableActor
 public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Health Booster")
-		float healthMultiplier = 1.3;
+		float healthIncrease = 1.3;
 
 	virtual void UpdateStat(AChickRedemptionCharacter* StatsRef) override;
 

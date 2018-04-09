@@ -16,8 +16,11 @@ class CHICKREDEMPTION_API AMovementSpeedBooth : public AInteractableActor
 
 public: 
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Health Booster")
-		float movementMultiplier = 1.3;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Stats")
+		float movementIncrease = 1.3;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Stats")
+		float frictionIncrease = 1000;
 
 	virtual void UpdateStat(AChickRedemptionCharacter* StatsRef) override;
 
