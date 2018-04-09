@@ -20,5 +20,7 @@ class CHICKREDEMPTION_API AEndGameBooth : public AInteractableActor
 	
 	virtual void UpdateText(float cost) override;
 
-	
+	FTimerHandle _loopTimerHandle;
+
+	void Quit();
 };
