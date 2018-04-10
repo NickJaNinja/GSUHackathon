@@ -4,7 +4,7 @@
 #include "DamageEntity.h"
 #include "ChickRedemptionCharacter.h"
 #include "Engine.h"
-#include "Components/BillboardComponent.h"
+
 
 
 // Sets default values
@@ -14,8 +14,7 @@ AEnemyManager::AEnemyManager()
 	PrimaryActorTick.bCanEverTick = true;
 	Root = CreateDefaultSubobject<USceneComponent>("Root");
 	RootComponent = Root;
-	Icon = CreateDefaultSubobject<UBillboardComponent>("Icon");
-	Icon->SetupAttachment(Root);
+	Icon = CreateDefaultSubobject<AActor>("Icon");
 	
 	wave = 1;
 }

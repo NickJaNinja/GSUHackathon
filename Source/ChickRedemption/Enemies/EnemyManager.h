@@ -27,7 +27,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Root")
 		USceneComponent* Root;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Root")
-		UBillboardComponent* Icon;
+		AActor* Icon;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spawn Location")
 		int32 MinSpawnLoc;
